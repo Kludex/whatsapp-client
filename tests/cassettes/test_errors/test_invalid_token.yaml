@@ -1,0 +1,86 @@
+interactions:
+- request:
+    body: '{"to":"33788813966","type":"text","text":{"body":"Hello","preview_url":false},"messaging_product":"whatsapp"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/json
+      Host:
+      - graph.facebook.com
+      User-Agent:
+      - python-httpx/0.28.1
+    method: POST
+    uri: https://graph.facebook.com/v22.0/123456789/messages
+  response:
+    body:
+      string: '{"error":{"message":"Invalid OAuth access token - Cannot parse access
+        token","type":"OAuthException","code":190,"fbtrace_id":"AGRfMsum6uV8Hv9MUfvTijJ"}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cache-Control:
+      - no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '152'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 07 Feb 2026 13:44:36 GMT
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Proxy-Status:
+      - http_request_error; e_fb_vipaddr="AcP3POSmUHREWWqeJTLKQa-tyyFez4eBTsCcmj_PcuA2_4Ukb9D-BOiqYJxkdd_EmJ2OubmCQp6Ocq35_DKHayENpEQQTOfYVA";
+        e_clientaddr="AcOl717k5lGO4v0WZBwKTADpAYU3uPderqIIU7HqQ38vMinAn89ztPweE8Eytp3oO5d7j2UvJTR8-sVjpN-LJkOCqkN-keUOdDL1DjZKwSe9hrVAOQ";
+        e_upip="AcNnDBhpI4N91RzzEGygT6CER6Zx85TGuvxH6E4z7dG8FDBTEV8D-Mg51mITzsxuw7P3cZN0oW6292W3Oh8fQZn908LPP_P-2PCTUs98fVg";
+        e_fb_zone="AcNkjMSdQRDqpGgS1k-M9MTgxFKvzsyawH2u98VWT7sInmhcbAK9Dd4Z1k9iL1DA";
+        e_fb_twtaskhandle="AcPNJ-rJwiie7pyVSHDOmfBe2i3zClDnq6TAwAiiyKJx_4QFMDY0CXoSlbPShIRnbKUWKIfP8iwB29CDUw_8hJg78WR6XNrjqjiLibnfKxtm5ZE";
+        e_proxy="AcMCwNJtmB5y-pNoH1_MYuodJqhqCP34gQBcUsrHesPLPvNTbWl6_J_6rYu_OB364bnJ4FhIFhw7uJgRcI4yUg",
+        http_request_error; e_fb_vipaddr="AcPEmUY5pJzEK4G8uo-J527FibpaeoPrhig2gewp07apL7UKY4z2-40Opn8yCjZWztjyW6DhtNA";
+        e_clientaddr="AcMF4eYZ4hNqkiPoB0A5HLakiVwQsODmfkiCBtajAY_abFspOqiESUhwrRddNEBOtnc-W_SzTBw4z8e-";
+        e_upip="AcO4icrvCCNQ9HfIi9F5ByqsSVMqnwd8w0Cpu2aMZhp5KV2OTqAE0AeXCxhZJ-f6lzgKF9vulnR4HzfhDX_qq3ayLBDfPcFU-g";
+        e_fb_zone="AcNukuILyTES8Rw9Vi3Xp_RN9lHqszHT6VmSFEki_FQA3DiPwOkHlKveFGcm7Q";
+        e_fb_twtaskhandle="AcPXAWv8ThSHghPUfqvc_-js2VxFrCF-T5aEYVIdIDB3kcyx9zhcl6ROVwhGv7qMpTbMTEdr-WJTzkjAJ6Y9ZaHusQbXHGrMxJG8";
+        e_proxy="AcO_Ye92vsnkVSZxYXSVsgYpXz9yNEEzfVggqDpZAloIf3CCusBB2NNKmgPjgqNdFE2orkJ_KJuE32w"
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Vary:
+      - Origin
+      WWW-Authenticate:
+      - OAuth "Facebook Platform" "invalid_token" "Invalid OAuth access token - Cannot
+        parse access token"
+      X-FB-Connection-Quality:
+      - EXCELLENT; q=0.9, rtt=12, rtx=0, c=10, mss=1380, tbw=4605, tp=-1, tpl=-1,
+        uplat=111, ullat=0
+      X-FB-Debug:
+      - qe+LQrVTlaMUZVc7hVT8kbovJYLKn9AX74k8UURU5wiOTbgblA6lxA44wttqDSsEfEtdYmtCye6GsE+R6KhEjg==
+      debug-link:
+      - https://www.meta.com/debug/?mid=fbd81c80b60dcfceb52b1223b7744fea
+      error-mid:
+      - fbd81c80b60dcfceb52b1223b7744fea
+      x-fb-aed:
+      - '729'
+      x-fb-request-id:
+      - AGRfMsum6uV8Hv9MUfvTijJ
+      x-fb-rev:
+      - '1033098987'
+      x-fb-server-load:
+      - '2'
+      x-fb-trace-id:
+      - FUnZuDGJSTt
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

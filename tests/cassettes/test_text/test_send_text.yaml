@@ -1,0 +1,71 @@
+interactions:
+- request:
+    body: '{"to":"33788813966","type":"text","text":{"body":"Hello from Python!","preview_url":false},"messaging_product":"whatsapp"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '122'
+      Content-Type:
+      - application/json
+      Host:
+      - graph.facebook.com
+      User-Agent:
+      - python-httpx/0.28.1
+    method: POST
+    uri: https://graph.facebook.com/v22.0/1008875238968261/messages
+  response:
+    body:
+      string: '{"messaging_product":"whatsapp","contacts":[{"input":"33788813966","wa_id":"33788813966"}],"messages":[{"id":"wamid.HBgLMzM3ODg4MTM5NjYVAgARGBIzNzc4QTM2MTZDMDU4NEZBREQA"}]}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '172'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 07 Feb 2026 13:44:01 GMT
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Vary:
+      - Origin
+      X-FB-Connection-Quality:
+      - EXCELLENT; q=0.9, rtt=10, rtx=0, c=10, mss=1380, tbw=4605, tp=-1, tpl=-1,
+        uplat=595, ullat=0
+      X-FB-Debug:
+      - lE/N3u07P5HaHNHN4K+iNJMg6iGFSRZyuQtDyx2CCZqYL12Iib+B9jrzWRChUYug68+PPB6KkVZbjPguohL8qg==
+      facebook-api-version:
+      - v24.0
+      x-ad-api-version-warning:
+      - The call has been auto-upgraded to v24.0 as v22.0 will be deprecated.
+      x-business-use-case-usage:
+      - '{"2834713520071064":[{"type":"whatsapp","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      x-fb-aed:
+      - '729'
+      x-fb-request-id:
+      - Ak_qt1zh0oLN_nHJNlPxwh0
+      x-fb-rev:
+      - '1033098987'
+      x-fb-server-load:
+      - '10'
+      x-fb-trace-id:
+      - CQx1Z4eRfM2
+    status:
+      code: 200
+      message: OK
+version: 1

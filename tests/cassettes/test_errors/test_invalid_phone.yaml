@@ -1,0 +1,98 @@
+interactions:
+- request:
+    body: '{"to":"invalid","type":"text","text":{"body":"Hello","preview_url":false},"messaging_product":"whatsapp"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '105'
+      Content-Type:
+      - application/json
+      Host:
+      - graph.facebook.com
+      User-Agent:
+      - python-httpx/0.28.1
+    method: POST
+    uri: https://graph.facebook.com/v22.0/1008875238968261/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA42OMUvEQBSE/8pjbBSi5Dir7SKnjYgQLezCS/aZLOztLrsvxHDkv8txhRYW1vPN
+        fHOC5BwzzAlHKYVHgcH11W6/q/f1DbUyuOQkKKUpBqEwH3vJFKKSC8Tex0UseVcUFXRN5/ZrM+v0
+        +DVIUhcDKgzRCsxlsrr4OsvKP1IXxi7laOdBYbBMrIVTQgUrys4XGPz/iaHGWsp/8xp/JWeaOFjS
+        vBKP7MIdtgqfvWYepHMWBs3zw6F9f2uXvr+tW3//8TQe+vUF2/YN3ud/nDsBAAA=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cache-Control:
+      - no-store
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '218'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 07 Feb 2026 13:44:36 GMT
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Proxy-Status:
+      - http_request_error; e_fb_vipaddr="AcO23t-Wjlv0590xobXAeUeAFUokZkieH-0FBNI4vs6fq5wHEs9A7ebiurDwLDdSmwCZo50uzZk4FpQlBexug1raQyePe4QvTg";
+        e_clientaddr="AcPkgFVKoyXdBKx0sCsulV4npNk8WDrb-tOAqRPcJ49tQq_3wAWE-tBimWaYhOf0pYluGmgWpN6JmtO26KMiLWe-P_8ybdi8dbMd20oJvpqcaHus";
+        e_upip="AcPOB4Rxn-GiuZH637jQVP-6uNSrdf1HmWpxbC7k4I_08ZHXRZTwIr_h3DlxML1lVZl_7QqGhvBEU722iMlds5LK9j7ADRtHtFsq6EmDJC4";
+        e_fb_zone="AcPibFNNfnUwmShDdUeMQWHq3U4d-zAZzdpdx2-tZq6EjRdTBzHl4TDu1ZylHVAW";
+        e_fb_twtaskhandle="AcO_mQ0VyI8ci4e_XQZerd2oW2634Xyo5JAefYEvLCDxfZ_DYj1sX1Eke47hKWnj5fyCMMU9Xb0oQnHj1_cpxbaY0elQOfk3NVdnh8woIuiE3Go";
+        e_proxy="AcPmhNMyz9do0-GdByB0Bfh9ZPe-14iiTEiDXA-E30Uk-k-x02cILgB8s20CSELkofUpGFBI21h0iX38Ljm19A",
+        http_request_error; e_fb_vipaddr="AcPjizQ_AaKG82-0gi1yz0_NrT5sUTylrMmakLZ14mkIQLUezZejlFmWrP87MEG1Mh-zKpXIWFc";
+        e_clientaddr="AcMMCEa0Am89bP--P17F0U5S4a7aMRs3MXcfa9gUrleBTwSr24ItYlpVIIieIMXidIiXTcEOb0ZdJugq";
+        e_upip="AcNDdNN20ZxzoKGi_tBCKEYTBoCrnlveQt7Hdsonm5ert9RxbuHNrAXnjRB1mURZ8UyPTUCHpoA9BqUq3sEurCZkVJJs4ArYuQ";
+        e_fb_zone="AcOFZO___onK8A8HhvdBDVR_pKEjU1O5h5oLadCaDpfdAQRyclXbhab2kjxccA";
+        e_fb_twtaskhandle="AcNAD2QwuV3n_FH0zZ_abpNgnH1SNdsK-iyZrbaaixCnY4uwCHYtBiC_8fQofTfBjBXKCpnsiPxFzD2M04F-XWvIPSB4PTCGKjk9";
+        e_proxy="AcNVVgkAUgilYG4gaZr8iM9R2Le7TDc-KT493Qdmx_csfHtO-w6A8bh5oWPhezjUbF6ytnYtIyEKST0"
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Vary:
+      - Origin
+      - Accept-Encoding
+      WWW-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#131030) Recipient phone number
+        not in allowed list"
+      X-FB-Connection-Quality:
+      - EXCELLENT; q=0.9, rtt=13, rtx=0, c=10, mss=1380, tbw=4605, tp=-1, tpl=-1,
+        uplat=298, ullat=0
+      X-FB-Debug:
+      - I3D6nS2kiEEHs8dOAnKyeW2r3OJaSld3FqbqdSjpxOc50z26SqMRYr/yDBokGwVr6CSj/LTw2/lvVT/xBLKB9A==
+      debug-link:
+      - https://www.meta.com/debug/?mid=c9506d75f8a0bd5f3f8148f654c4f51e
+      error-mid:
+      - c9506d75f8a0bd5f3f8148f654c4f51e
+      facebook-api-version:
+      - v24.0
+      x-ad-api-version-warning:
+      - The call has been auto-upgraded to v24.0 as v22.0 will be deprecated.
+      x-business-use-case-usage:
+      - '{"2834713520071064":[{"type":"whatsapp","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      x-fb-aed:
+      - '729'
+      x-fb-request-id:
+      - AKBDRTSRwbb-0Rl4XFgDbyM
+      x-fb-rev:
+      - '1033098987'
+      x-fb-server-load:
+      - '3'
+      x-fb-trace-id:
+      - CHsFPwVG4kW
+    status:
+      code: 400
+      message: Bad Request
+version: 1
