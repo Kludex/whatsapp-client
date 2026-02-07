@@ -24,7 +24,19 @@ classifiers = [
 dependencies = ["httpx>=0.28"]
 
 [dependency-groups]
-test = ["pytest>=8", "pytest-asyncio>=0.25", "pytest-recording>=0.13", "inline-snapshot>=0.31"]
+dev = [
+    "ngrok>=1.4.0",
+    "python-dotenv>=1.2.1",
+    "starlette>=0.52.1",
+    "uvicorn>=0.40.0",
+]
+test = [
+    "pytest>=8",
+    "pytest-asyncio>=0.25",
+    "pytest-recording>=0.13",
+    "inline-snapshot>=0.31",
+    "pytest-examples>=0.0.18",
+]
 
 [tool.ruff]
 line-length = 120
@@ -35,7 +47,7 @@ skip-magic-trailing-comma = true
 [tool.pyright]
 typeCheckingMode = "strict"
 pythonVersion = "3.10"
-include = ["src"]
+include = ["src", "tests"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
