@@ -4,9 +4,11 @@ Async Python client for the [WhatsApp Business Cloud API](https://developers.fac
 
 > **Note:** This package was mainly LLM-generated (Claude), with very strong opinions from [@Kludex](https://github.com/Kludex).
 
-> Requires Python 3.10+
+Requires Python 3.10+
 
 ## Installation
+
+Install with uv:
 
 ```bash
 uv add whatsapp-client
@@ -14,17 +16,18 @@ uv add whatsapp-client
 
 ## Usage
 
+Send a text message:
+
 ```python
 from whatsapp_client import WhatsAppClient
 
-async with WhatsAppClient(
-    phone_number_id="your-phone-number-id",
-    access_token="your-access-token",
-) as client:
+async with WhatsAppClient(phone_number_id="your-phone-number-id", access_token="your-access-token") as client:
     await client.send_text(to="5511999999999", body="Hello!")
 ```
 
 ### Send media
+
+Images, audio, video, documents, and stickers are sent by URL:
 
 ```python
 await client.send_image(to="5511999999999", link="https://example.com/image.png", caption="Check this out")
@@ -36,22 +39,27 @@ await client.send_sticker(to="5511999999999", link="https://example.com/sticker.
 
 ### Send location
 
+Share a pin with optional name and address:
+
 ```python
 await client.send_location(to="5511999999999", latitude=-23.5505, longitude=-46.6333, name="São Paulo")
 ```
 
 ### Send template
 
+Send a pre-approved message template:
+
 ```python
 from whatsapp_client import Template, TemplateLanguage
 
 await client.send_template(
-    to="5511999999999",
-    template=Template(name="hello_world", language=TemplateLanguage(code="en_US")),
+    to="5511999999999", template=Template(name="hello_world", language=TemplateLanguage(code="en_US"))
 )
 ```
 
 ### Send interactive messages
+
+Reply buttons and list menus let users pick from predefined options:
 
 ```python
 from whatsapp_client import ReplyButton, ListSection, ListRow
@@ -72,6 +80,8 @@ await client.send_list(
 
 ### Error handling
 
+API errors are raised as `WhatsAppAPIError` with the status code and Graph API error details:
+
 ```python
 from whatsapp_client import WhatsAppAPIError
 
@@ -79,6 +89,81 @@ try:
     await client.send_text(to="invalid", body="Hello")
 except WhatsAppAPIError as e:
     print(e.status_code, e.error_code, e.message)
+```
+
+## Webhooks
+
+Receive incoming messages and status updates via Meta's webhook system.
+
+### Starlette example
+
+Create a `WebhookHandler` with your app secret and client. Register callbacks with `@handler.on_message` and `@handler.on_status` — the client is passed as the first argument, so replying is straightforward. Use `match/case` on `message.content` to handle different message types:
+
+```python
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
+from starlette.applications import Starlette
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse, Response
+from starlette.routing import Route
+
+from whatsapp_client import (
+    MediaContent,
+    Message,
+    Status,
+    TextContent,
+    WebhookHandler,
+    WebhookNotification,
+    WhatsAppClient,
+    verify_challenge,
+)
+
+client = WhatsAppClient(phone_number_id="your-phone-number-id", access_token="your-access-token")
+handler = WebhookHandler(app_secret="your-app-secret", client=client)
+
+
+@handler.on_message
+async def on_message(client: WhatsAppClient, notification: WebhookNotification, message: Message) -> None:
+    match message.content:
+        case TextContent(body=body):
+            await client.send_text(to=message.from_, body=f"Echo: {body}")
+        case MediaContent():
+            await client.send_text(to=message.from_, body=f"Got {message.type}: {message.content.id}")
+
+
+@handler.on_status
+async def on_status(client: WhatsAppClient, notification: WebhookNotification, status: Status) -> None:
+    print(f"{status.id} -> {status.status}")
+
+
+async def webhook_get(request: Request) -> Response:
+    challenge = verify_challenge(
+        mode=request.query_params["hub.mode"],
+        token=request.query_params["hub.verify_token"],
+        challenge=request.query_params["hub.challenge"],
+        verify_token="your-verify-token",
+    )
+    return PlainTextResponse(challenge)
+
+
+async def webhook_post(request: Request) -> Response:
+    body = await request.body()
+    signature = request.headers["x-hub-signature-256"]
+    await handler.handle(body=body, signature=signature)
+    return Response(status_code=200)
+
+
+@asynccontextmanager
+async def lifespan(app: Starlette) -> AsyncIterator[None]:
+    async with client:
+        yield
+
+
+app = Starlette(
+    routes=[Route("/webhook", webhook_get, methods=["GET"]), Route("/webhook", webhook_post, methods=["POST"])],
+    lifespan=lifespan,
+)
 ```
 
 ## License
