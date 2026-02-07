@@ -2,7 +2,8 @@
 
 Async Python client for the [WhatsApp Business Cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api).
 
-> **Note:** This package was mainly LLM-generated (Claude), with very strong opinions from [@Kludex](https://github.com/Kludex).
+> [!NOTE]
+> This package was mainly LLM-generated (Claude), with very strong opinions from [@Kludex](https://github.com/Kludex).
 
 > Requires Python 3.10+
 
@@ -11,6 +12,31 @@ Async Python client for the [WhatsApp Business Cloud API](https://developers.fac
 ```bash
 uv add whatsapp-client
 ```
+
+## Setup
+
+You need two credentials from Meta to use this package:
+
+### 1. Phone Number ID
+
+1. Go to the [Meta Developer Portal](https://developers.facebook.com/apps/) and create a **Business** app.
+2. In your app dashboard, add the **WhatsApp** product.
+3. Go to **WhatsApp** > **API Setup** — your **Phone Number ID** is listed below the test phone number.
+
+### 2. Access Token
+
+For **testing**, click **Generate** on the API Setup page to get a temporary 24-hour token.
+
+For **production**, create a System User in [Meta Business Suite](https://business.facebook.com/settings/system-users):
+
+1. Create a System User with **Admin** role.
+2. Assign your WhatsApp app to the System User.
+3. Generate a token with the `whatsapp_business_messaging` permission.
+
+### 3. Add test recipients
+
+In test mode, you must verify recipient phone numbers before sending messages.
+Go to **WhatsApp** > **API Setup**, click **Manage phone number list**, and add the numbers you want to message.
 
 ## Usage
 
