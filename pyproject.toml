@@ -1,6 +1,6 @@
 [project]
 name = "whatsapp-client"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Async Python client for the WhatsApp Business Cloud API"
 readme = "README.md"
 authors = [
@@ -40,6 +40,14 @@ include = ["src"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "pep440"
+bump = true
+
 [build-system]
-requires = ["uv_build>=0.9.21,<0.10.0"]
-build-backend = "uv_build"
+requires = ["hatchling", "uv-dynamic-versioning>=0.7.0"]
+build-backend = "hatchling.build"
