@@ -117,6 +117,45 @@ except WhatsAppAPIError as e:
     print(e.status_code, e.error_code, e.message)
 ```
 
+## Groups
+
+Create and manage WhatsApp groups, and send messages to them:
+
+```python
+from whatsapp_client import WhatsAppClient
+
+async with WhatsAppClient(phone_number_id="your-phone-number-id", access_token="your-access-token") as client:
+    # Create a group
+    group = await client.create_group(subject="My Group", participants=["5511999999999"])
+
+    # Send a message to the group (works with any send method)
+    await client.send_text(to=group.id, body="Hello group!")
+    await client.send_image(to=group.id, link="https://example.com/image.png")
+
+    # List and inspect groups
+    groups = await client.get_groups()
+    info = await client.get_group(groups[0].id)
+
+    # Update or delete a group
+    await client.update_group(group.id, subject="New Name", description="New description")
+    await client.delete_group(group.id)
+
+    # Invite links
+    invite = await client.get_invite_link(group.id)
+    new_invite = await client.reset_invite_link(group.id)
+
+    # Manage participants and join requests
+    await client.remove_participants(group.id, participants=["5511999999999"])
+    requests = await client.get_join_requests(group.id)
+    await client.approve_join_requests(group.id, participants=["5511999999999"])
+    await client.reject_join_requests(group.id, participants=["5511999999999"])
+```
+
+Group IDs contain `@g.us` (e.g., `120363023561234567@g.us`). When any send method receives a group ID, it automatically sets `recipient_type: "group"` in the API request.
+
+> [!NOTE]
+> The Groups API requires your WhatsApp Business account to have at least 100,000 monthly business-initiated conversations.
+
 ## Webhooks
 
 Receive incoming messages and status updates via Meta's webhook system.

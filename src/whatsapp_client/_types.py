@@ -167,3 +167,38 @@ class ListRow:
 class ListSection:
     title: str
     rows: list[ListRow]
+
+
+# --- Group types ---
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GroupParticipant:
+    phone_number: str
+    admin: bool
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GroupInfo:
+    id: str
+    subject: str
+    owner: str
+    creation_timestamp: str
+    participants: list[GroupParticipant]
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GroupSummary:
+    id: str
+    subject: str
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GroupInviteLink:
+    link: str
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GroupJoinRequest:
+    phone_number: str
+    timestamp: str
