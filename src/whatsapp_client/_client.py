@@ -9,6 +9,11 @@ from ._exceptions import WhatsAppAPIError, GraphAPIErrorBody
 from ._types import (
     Contact,
     ContactInfo,
+    GroupInfo,
+    GroupInviteLink,
+    GroupJoinRequest,
+    GroupParticipant,
+    GroupSummary,
     ListSection,
     MessageId,
     MessageResponse,
@@ -50,8 +55,19 @@ class WhatsAppClient:
 
     # --- Private helpers ---
 
+    async def _api(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
+        url = f"{self._base_url}/{path}"
+        response = await self._http.request(method, url, **kwargs)
+        if response.status_code >= 400:
+            body: GraphAPIErrorBody = response.json()
+            raise WhatsAppAPIError.from_response(response.status_code, body)
+        data: dict[str, Any] = response.json()
+        return data
+
     async def _send(self, payload: dict[str, Any]) -> MessageResponse:
         payload["messaging_product"] = "whatsapp"
+        if "@g.us" in payload.get("to", ""):
+            payload["recipient_type"] = "group"
         response = await self._http.post("/messages", json=payload)
         if response.status_code >= 400:
             body: GraphAPIErrorBody = response.json()
@@ -195,3 +211,79 @@ class WhatsAppClient:
         if footer is not None:
             interactive["footer"] = {"text": footer}
         return await self._send({"to": to, "type": "interactive", "interactive": interactive})
+
+    # --- Group management methods ---
+
+    async def create_group(self, *, subject: str, participants: list[str]) -> GroupInfo:
+        data = await self._api(
+            "POST",
+            f"{self._phone_number_id}/groups",
+            json={
+                "subject": subject,
+                "participants": [{"user": p} for p in participants],
+                "messaging_product": "whatsapp",
+            },
+        )
+        return GroupInfo(
+            id=data["id"],
+            subject=data["subject"],
+            owner=data["owner"],
+            creation_timestamp=data["creation_timestamp"],
+            participants=[
+                GroupParticipant(phone_number=p["phone_number"], admin=p["admin"]) for p in data["participants"]
+            ],
+        )
+
+    async def get_groups(self) -> list[GroupSummary]:
+        data = await self._api("GET", f"{self._phone_number_id}/groups")
+        return [GroupSummary(id=g["id"], subject=g["subject"]) for g in data.get("data", [])]
+
+    async def get_group(self, group_id: str) -> GroupInfo:
+        data = await self._api("GET", group_id)
+        return GroupInfo(
+            id=data["id"],
+            subject=data["subject"],
+            owner=data["owner"],
+            creation_timestamp=data["creation_timestamp"],
+            participants=[
+                GroupParticipant(phone_number=p["phone_number"], admin=p["admin"]) for p in data["participants"]
+            ],
+        )
+
+    async def update_group(self, group_id: str, *, subject: str | None = None, description: str | None = None) -> None:
+        payload: dict[str, str] = {}
+        if subject is not None:
+            payload["subject"] = subject
+        if description is not None:
+            payload["description"] = description
+        await self._api("POST", group_id, json=payload)
+
+    async def delete_group(self, group_id: str) -> None:
+        await self._api("DELETE", group_id)
+
+    async def get_invite_link(self, group_id: str) -> GroupInviteLink:
+        data = await self._api("GET", f"{group_id}/invite_link")
+        return GroupInviteLink(link=data["invite_link"])
+
+    async def reset_invite_link(self, group_id: str) -> GroupInviteLink:
+        data = await self._api("POST", f"{group_id}/invite_link")
+        return GroupInviteLink(link=data["invite_link"])
+
+    async def remove_participants(self, group_id: str, *, participants: list[str]) -> None:
+        await self._api(
+            "DELETE", f"{group_id}/participants", json={"participants": [{"user": p} for p in participants]}
+        )
+
+    async def get_join_requests(self, group_id: str) -> list[GroupJoinRequest]:
+        data = await self._api("GET", f"{group_id}/join_requests")
+        return [
+            GroupJoinRequest(phone_number=r["phone_number"], timestamp=r["timestamp"]) for r in data.get("data", [])
+        ]
+
+    async def approve_join_requests(self, group_id: str, *, participants: list[str]) -> None:
+        await self._api("POST", f"{group_id}/join_requests", json={"participants": [{"user": p} for p in participants]})
+
+    async def reject_join_requests(self, group_id: str, *, participants: list[str]) -> None:
+        await self._api(
+            "DELETE", f"{group_id}/join_requests", json={"participants": [{"user": p} for p in participants]}
+        )
